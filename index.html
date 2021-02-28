@@ -4,8 +4,116 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body > div > div:after{
+            content: "";
+            display: block;
+            padding-bottom: 100%;
+        }
+
+        body > div{
+            width: 960px;
+            margin:  auto;
+            display: block;
+            padding: 0;
+            
+        } 
+        #buttonDiv{
+            width: 960px;
+            margin:  auto;
+            display: block;
+            height: 50px;
+            margin-bottom: 40px;
+        }
+        button{
+            margin: 0 auto;
+            margin-top: 30px;
+            display: block;
+            height: 60px;
+            width: 80px;
+        }
+        
+        
+    </style>
 </head>
-<body>
+<body> 
+    <div id="buttonDiv">
+        <button>Clear</button>
+    </div>
+
+    
     
 </body>
+<script>
+    const container = document.createElement('div');
+    const body = document.querySelector('body');
+    const button1 = document.querySelector('button')
+
+    body.appendChild(container);
+    var varHolder = [];
+    var DivHieghtAndWidth;
+    var numberOfColumnsGlobal; 
+    // = window.prompt('input lenght of side in px');
+    numberOfColumnsGlobal = window.prompt('input lenght of side in px');
+
+
+    
+    function createGrid(numberOfColumns){
+        let totalAmountOfCells = numberOfColumnsGlobal * numberOfColumnsGlobal;
+        DivHieghtAndWidth = (960/numberOfColumnsGlobal);
+        console.log(numberOfColumnsGlobal)
+
+        for(let x = 1; x <= totalAmountOfCells; x++){
+            varHolder[x] = 'div'.concat(x);
+            varHolder[x] = document.createElement('div');
+            varHolder[x].id = 'div'.concat(x);
+
+            // varHolder[x].textContent = x;
+            container.style.cssText = 'display: flex; flex-wrap: wrap;';
+
+            //flex-grow wielkośc w porównainu do innych elementów w divie fg 1 - jedna jednostka
+            // fg 2 - 2 jednostki z 3 dostępnych 
+
+            // flex-shrink:n dany element ma sie zmniejszyć n razy w parównaniu do innych elementów w divie
+            // flex-shrink: 2 nie zmniejsza elementu 2 razy
+            // tylko 2 razy doejmuje wartośc która odjął od innych divów 
+
+            // flex-basis ustawia szerokość elementu w divie
+            
+
+            varHolder[x].style.cssText = `flex: 1 0 ${DivHieghtAndWidth}px; background-color: grey; margin: 0; padding:0;`;
+            container.appendChild(varHolder[x]);
+            
+            //varHolder[x].textContent = x;
+            
+            varHolder[x].addEventListener('mouseenter',() =>
+            {varHolder[x].style.cssText += 'background-color: #545454;'});
+
+        }}
+
+    function clearGrid(){
+        for(let x = 1; x <= (numberOfColumnsGlobal*numberOfColumnsGlobal); x++){
+            // varHolder[x].style.cssText = `flex: 1 0  ${DivHieghtAndWidth}px; background-color: grey;`;
+            varHolder[x].remove();
+        }
+        numberOfColumnsGlobal = window.prompt('input lenght of side in px');
+        createGrid()
+        
+    }
+
+    function main(){
+        button1.addEventListener('click', () => clearGrid())
+        createGrid();
+        // console.log(numberOfColumnsGlobal + 'w mainie');
+    }
+    
+    main();
+
+
+
+    
+    
+
+
+</script>
 </html>
